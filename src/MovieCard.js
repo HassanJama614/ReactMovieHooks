@@ -1,10 +1,10 @@
 // src/MovieCard.js
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link
 
 const MovieCard = ({ movie }) => {
-  const { title, description, posterURL, rating } = movie;
+  const { id, title, description, posterURL, rating } = movie;
 
-  // Basic inline styles (consider using CSS modules or styled-components later)
   const cardStyle = {
     border: '1px solid #ccc',
     borderRadius: '8px',
@@ -15,11 +15,13 @@ const MovieCard = ({ movie }) => {
     backgroundColor: '#f9f9f9',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between', // Pushes rating to the bottom
-    height: '450px' // Fixed height for alignment
+    justifyContent: 'space-between',
+    height: '450px',
+    textDecoration: 'none', // Remove underline from Link
+    color: 'inherit' // Inherit text color
   };
 
-  const imgStyle = {
+   const imgStyle = {
     width: '100%',
     maxHeight: '280px', // Limit image height
     objectFit: 'cover',
@@ -30,28 +32,32 @@ const MovieCard = ({ movie }) => {
   const descriptionStyle = {
      fontSize: '0.9em',
      color: '#555',
-     flexGrow: 1, // Allows description to take up available space
-     overflow: 'hidden', // Hide overflowing text
-     textOverflow: 'ellipsis', // Add ellipsis (...)
+     flexGrow: 1,
+     overflow: 'hidden',
+     textOverflow: 'ellipsis',
      display: '-webkit-box',
-     WebkitLineClamp: 4, // Limit to 4 lines
+     WebkitLineClamp: 4, // Keep description brief on the card
      WebkitBoxOrient: 'vertical',
      marginBottom: '10px'
   }
 
   const ratingStyle = {
       fontWeight: 'bold',
-      color: '#e74c3c', // Or gold/yellow color
-      marginTop: 'auto' // Aligns rating to the bottom
+      color: '#e74c3c',
+      marginTop: 'auto'
   }
 
+
   return (
-    <div style={cardStyle}>
+    // Wrap the card content in a Link component
+    <Link to={`/movie/${id}`} style={cardStyle}> {/* Link to the detail page using movie ID */}
       <img src={posterURL} alt={`${title} Poster`} style={imgStyle} />
       <h3>{title}</h3>
-      <p style={descriptionStyle}>{description}</p>
+      {/* Show only a snippet or no description on the card now */}
+       {/* <p style={descriptionStyle}>{description}</p> */}
+       <div style={{flexGrow: 1}}></div> {/* Add a spacer if description removed */}
       <p style={ratingStyle}>Rating: {rating}/10</p>
-    </div>
+    </Link>
   );
 };
 
